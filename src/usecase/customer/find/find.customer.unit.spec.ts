@@ -1,5 +1,4 @@
 import { Customer } from '../../../domain/customer/entity/customer'
-import { CustomerRepositoryInterface } from '../../../domain/customer/repository/customer-repository.interface'
 import { Address } from '../../../domain/customer/value-object/address'
 import { FindCustomerUseCase } from './find.customer.usecase'
 
@@ -7,7 +6,7 @@ const customer = new Customer('123', 'Customer 1')
 const address = new Address('street 1', 1, 'zip 1', 'city 1', 'state 1')
 customer.changeAddress(address)
 
-const mockRepository = (): CustomerRepositoryInterface => {
+const mockRepository = (): any => {
   return {
     find: jest.fn().mockReturnValue(Promise.resolve(customer)),
     findAll: jest.fn(),
@@ -20,10 +19,8 @@ describe('test find customer use case', () => {
   it('should find a customer', async () => {
     const customerRepository = mockRepository()
 
-    const input = {
-      id: '123'
-    }
-    const findCustomerUseCase = new FindCustomerUseCase(customerRepository)
+    const input = { id: '123' }
+    const useCase = new FindCustomerUseCase(customerRepository)
 
     const output = {
       id: '123',
@@ -37,7 +34,20 @@ describe('test find customer use case', () => {
       }
     }
 
-    const result = await findCustomerUseCase.execute(input)
+    const result = await useCase.execute(input)
     expect(result).toEqual(output)
+  })
+
+  it('should not find a customer', async () => {
+    const customerRepository = mockRepository()
+    customerRepository.find.mockImplementation(() => {
+      throw new Error('customer not found')
+    })
+
+    const input = { id: '123' }
+    const useCase = new FindCustomerUseCase(customerRepository)
+
+    const promise = useCase.execute(input)
+    expect(promise).rejects.toThrow('customer not found')
   })
 })
