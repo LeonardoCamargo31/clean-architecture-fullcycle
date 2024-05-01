@@ -1,5 +1,12 @@
-export interface InputFindCustomerDTO {
-  id: string
+export interface InputCreateCustomerDTO {
+  name: string
+  address: {
+    street: string
+    number: number
+    zip: string
+    city: string
+    state: string
+  }
 }
 
 export interface OutputFindCustomerDTO {
