@@ -9,7 +9,7 @@ export interface InputCreateCustomerDTO {
   }
 }
 
-export interface OutputFindCustomerDTO {
+export interface OutputCreateCustomerDTO {
   id: string
   name: string
   address: {
