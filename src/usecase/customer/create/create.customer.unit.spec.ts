@@ -1,10 +1,4 @@
-import { Customer } from '../../../domain/customer/entity/customer'
-import { Address } from '../../../domain/customer/value-object/address'
 import { CreateCustomerUseCase } from './create.customer.usecase'
-
-const customer = new Customer('123', 'Customer 1')
-const address = new Address('street 1', 1, 'zip 1', 'city 1', 'state 1')
-customer.changeAddress(address)
 
 const mockRepository = (): any => {
   return {

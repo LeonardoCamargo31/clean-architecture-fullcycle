@@ -14,10 +14,10 @@ const mockRepository = (): any => {
 }
 
 describe('test for listing product use case', () => {
-  it('should list a customer', async () => {
-    const customerRepository = mockRepository()
+  it('should list a product', async () => {
+    const productRepository = mockRepository()
 
-    const useCase = new ListProductUseCase(customerRepository)
+    const useCase = new ListProductUseCase(productRepository)
     const output = await useCase.execute(undefined)
 
     expect(output.products.length).toEqual(2)
