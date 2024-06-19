@@ -1,7 +1,5 @@
 import { Customer } from '../../../domain/customer/entity/customer'
-import { CustomerFactory } from '../../../domain/customer/factory/customer-factory'
 import { CustomerRepositoryInterface } from '../../../domain/customer/repository/customer-repository.interface'
-import { Address } from '../../../domain/customer/value-object/address'
 import { InputListCustomerDTO, OutputListCustomerDTO } from './list.customer.dto'
 
 export class ListCustomerUseCase {
