@@ -12,7 +12,7 @@ export class UpdateProductUseCase {
     const product = await this.productRepository.find(input.id)
     product.changeName(input.name)
     product.changePrice(input.price)
-  
+
     await this.productRepository.update(product)
 
     return {

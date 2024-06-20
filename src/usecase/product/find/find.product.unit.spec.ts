@@ -1,7 +1,7 @@
 import { ProductFactory } from '../../../domain/product/factory/product-factory'
 import { FindProductUseCase } from './find.product.usecase'
 
-const product = ProductFactory.create('a','Product 1',10)
+const product = ProductFactory.create('a', 'Product 1', 10)
 
 const mockRepository = (): any => {
   return {
