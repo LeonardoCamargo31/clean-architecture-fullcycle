@@ -1,17 +1,25 @@
-export interface NotificationError {
+export interface NotificationErrorProps {
   message: string
   context: string
 }
 
 export class Notification {
-  private readonly errors: NotificationError[]
+  private readonly errors: NotificationErrorProps[]
 
   constructor () {
     this.errors = []
   }
 
-  addError (error: NotificationError): void {
+  addError (error: NotificationErrorProps): void {
     this.errors.push(error)
+  }
+
+  getErrors (): NotificationErrorProps[] {
+    return this.errors
+  }
+
+  hasErrors (): boolean {
+    return this.errors.length > 0
   }
 
   messages (context?: string): string {

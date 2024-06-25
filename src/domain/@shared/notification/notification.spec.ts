@@ -33,4 +33,26 @@ describe('unit test for notification', () => {
     const outputAllContexts = notification.messages()
     expect(outputAllContexts).toBe('customer: error message,customer: error message 2,order: error message 3,')
   })
+
+  it('should check if notification has at least one error', () => {
+    const notification = new Notification()
+    const error = {
+      message: 'error message',
+      context: 'customer'
+    }
+    notification.addError(error)
+    const output = notification.hasErrors()
+    expect(output).toBe(true)
+  })
+
+  it('should get all errors props', () => {
+    const notification = new Notification()
+    const error = {
+      message: 'error message',
+      context: 'customer'
+    }
+    notification.addError(error)
+    const output = notification.getErrors()
+    expect(output).toEqual([error])
+  })
 })
