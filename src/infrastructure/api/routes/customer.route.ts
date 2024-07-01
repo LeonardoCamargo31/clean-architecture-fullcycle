@@ -3,6 +3,8 @@ import { CreateCustomerUseCase } from '../../../usecase/customer/create/create.c
 import CustomerRepository from '../../customer/repository/sequelize/customer-repository'
 import { InputCreateCustomerDTO } from '../../../usecase/customer/create/create.customer.dto'
 import { ListCustomerUseCase } from '../../../usecase/customer/list/list.customer.usecase'
+import { json } from 'sequelize'
+import { CustomerPresenter } from '../presenters/customer.presenter'
 
 export const customerRoute = express.Router()
 
@@ -35,7 +37,11 @@ customerRoute.get('/', async (req: Request, res: Response) => {
     const output = await usecase.execute({})
     // o retorno do DTO = resultado do que eu quero disponibilizar como resposta da API
     // pode ter cenários que minha API espera um retorno e meu DTO tem outro formato
-    res.send(output)
+    // para isso temos um cara ai no meio, que chamamos de presenter
+    res.format({
+      json: async () => res.send(output),
+      xml: async () => res.send(CustomerPresenter.listXML(output))
+    })
   } catch (err) {
     console.log(err)
     res.status(500).send(err)

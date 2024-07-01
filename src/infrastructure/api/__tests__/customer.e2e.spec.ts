@@ -62,17 +62,40 @@ describe('E2E test for customer', () => {
 
       expect(responseCreated.status).toBe(200)
 
-      const responseListing = await request(app).get('/customer')
-      expect(responseListing.status).toBe(200)
-      expect(responseListing.body.customers.length).toBe(1)
+      const listResponse = await request(app)
+        .get('/customer')
+        .set('Accept', 'application/json')
+        .send()
 
-      const customer = responseListing.body.customers[0]
+      expect(listResponse.status).toBe(200)
+      expect(listResponse.body.customers.length).toBe(1)
+
+      const customer = listResponse.body.customers[0]
       expect(customer.name).toBe('john')
       expect(customer.address.street).toBe('Street 1')
       expect(customer.address.number).toBe(123)
       expect(customer.address.zip).toBe('12345-678')
       expect(customer.address.city).toBe('São Paulo')
       expect(customer.address.state).toBe('SP')
+
+      const listResponseXML = await request(app)
+        .get('/customer')
+        .set('Accept', 'application/xml')
+        .send()
+
+      expect(listResponseXML.status).toBe(200)
+      expect(listResponseXML.text).toContain('<?xml version="1.0" encoding="UTF-8"?>')
+      expect(listResponseXML.text).toContain('<customers>')
+      expect(listResponseXML.text).toContain('<customer>')
+      expect(listResponseXML.text).toContain('<name>john</name>')
+      expect(listResponseXML.text).toContain('<address>')
+      expect(listResponseXML.text).toContain('<street>Street 1</street>')
+      expect(listResponseXML.text).toContain('<city>São Paulo</city>')
+      expect(listResponseXML.text).toContain('<number>123</number>')
+      expect(listResponseXML.text).toContain('<zip>12345-678</zip>')
+      expect(listResponseXML.text).toContain('</address>')
+      expect(listResponseXML.text).toContain('</customer>')
+      expect(listResponseXML.text).toContain('</customers>')
     })
   })
 })
