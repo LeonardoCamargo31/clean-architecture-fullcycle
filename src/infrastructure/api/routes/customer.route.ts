@@ -33,6 +33,8 @@ customerRoute.get('/', async (req: Request, res: Response) => {
   const usecase = new ListCustomerUseCase(customerRepository)
   try {
     const output = await usecase.execute({})
+    // o retorno do DTO = resultado do que eu quero disponibilizar como resposta da API
+    // pode ter cenários que minha API espera um retorno e meu DTO tem outro formato
     res.send(output)
   } catch (err) {
     console.log(err)
